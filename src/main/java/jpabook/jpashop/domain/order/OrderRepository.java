@@ -1,20 +1,19 @@
 package jpabook.jpashop.domain.order;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class OrderRepository {
-    @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
-    public Long save(Order order) {
+    public void save(Order order) {
         em.persist(order);
-        return order.getId();
     }
 
-    public Order find(Long id) {
+    public Order findOne(Long id) {
         return em.find(Order.class, id);
     }
 }

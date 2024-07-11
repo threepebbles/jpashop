@@ -1,4 +1,4 @@
-package jpabook.jpashop.domain.member;
+package jpabook.jpashop.domain.common;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;

@@ -19,7 +19,7 @@ class MemberRepositoryTest {
 
 
     @Test
-    @Transactional  // 테스트인 경우 자동으로 실행이 끝난 후 DB를 롤백한다.
+    @Transactional  // 테스트인 경우 자동으로 실행이 끝난 후 DB를 롤백함
 //    @Rollback(false)    // 롤백을 강제로 없애는 방법
     public void testMember() throws Exception {
         //given

@@ -29,8 +29,9 @@ import lombok.Setter;
 @Table(name = "orders")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)  // protected 접근제어자를 가진 생성자를 정의한 것과 같은 의미
-// 빈 생성자가 아니라 다른 방법으로 생성해야 하는 구나를 깨닫게끔 해줌. 객체 생성 방식을 제한하여 하나로 일치시키기 위함
+// protected 접근제어자를 가진 생성자를 정의한 것과 같은 의미
+// 파라미터가 빈 생성자가 아니라 다른 방법으로 생성해야 하는 구나를 깨닫게끔 해줌. 객체 생성 방식을 제한하여 하나로 일치시키기 위함
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
     @Id
     @GeneratedValue
@@ -84,6 +85,8 @@ public class Order {
     }
 
     //==비즈니스 메서드==//
+    // 대부분의 비즈니스 로직이 엔티티 안에 포함되어 있는 스타일을 도메인 모델 패턴이라고 부름
+    // 반대로 서비스 계증에서 대부분의 비즈니스 로직을 처리하는 것을 트랜잭션 스크립트 패턴이라고 부름
 
     /**
      * 주문 취소
@@ -105,6 +108,6 @@ public class Order {
      * 전체 주문 가격 조회
      */
     public int getTotalPrice() {
-        return orderItems.stream().mapToInt(OrderItem::getOrderPrice).sum();
+        return orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
     }
 }

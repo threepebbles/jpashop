@@ -17,8 +17,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)  // protected 접근제어자를 가진 생성자를 정의한 것과 같은 의미
-// 빈 생성자가 아니라 다른 방법으로 생성해야 하는 구나를 깨닫게끔 해줌. 객체 생성 방식을 제한하여 하나로 일치시키기 위함
+// protected 접근제어자를 가진 생성자를 정의한 것과 같은 의미
+// 파라미터가 빈 생성자가 아니라 다른 방법으로 생성해야 하는 구나를 깨닫게끔 해줌. 객체 생성 방식을 제한하여 하나로 일치시키기 위함
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
     @Id
     @GeneratedValue
@@ -52,5 +53,12 @@ public class OrderItem {
     public void cancel() {
         // 재고 수량 원복
         item.addStock(count);
+    }
+
+    /**
+     * 주문상품 전체 가격 조회
+     */
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
     }
 }

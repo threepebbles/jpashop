@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true) // 메소드들의 기본 세팅은 readOnly지만
+@Transactional(readOnly = true) // 메소드들의 기본 세팅은 readOnly
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;

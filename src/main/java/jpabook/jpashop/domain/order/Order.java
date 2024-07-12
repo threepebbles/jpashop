@@ -17,8 +17,6 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import jpabook.jpashop.domain.delivery.Delivery;
-import jpabook.jpashop.domain.delivery.DeliveryStatus;
 import jpabook.jpashop.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Getter;

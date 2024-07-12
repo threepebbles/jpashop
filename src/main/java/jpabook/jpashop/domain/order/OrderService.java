@@ -1,6 +1,5 @@
 package jpabook.jpashop.domain.order;
 
-import jpabook.jpashop.domain.delivery.Delivery;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.domain.item.ItemRepository;
 import jpabook.jpashop.domain.member.Member;

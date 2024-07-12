@@ -1,4 +1,4 @@
-package jpabook.jpashop.domain.delivery;
+package jpabook.jpashop.domain.order;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jpabook.jpashop.domain.common.Address;
-import jpabook.jpashop.domain.order.Order;
 import lombok.Getter;
 import lombok.Setter;
 

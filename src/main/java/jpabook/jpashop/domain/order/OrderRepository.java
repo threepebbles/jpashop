@@ -24,11 +24,6 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class OrderRepository {
     private final EntityManager em;
-    /**
-     * QueryDSL
-     */
-
-
     private final JPAQueryFactory queryFactory;
 
     public void save(Order order) {
@@ -39,6 +34,9 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    /**
+     * 순수 JPQL (String)
+     */
     public List<Order> findAllByString(OrderSearch orderSearch) {
 
         String jpql = "select o from Order o join o.member m";
@@ -80,8 +78,9 @@ public class OrderRepository {
     }
 
     /**
-     * JPA Criteria (표준 스펙) 단점: 유지보수성이 0에 가까움.
+     * JPA Criteria (단점: 유지보수성이 0에 가까움)
      */
+
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
@@ -108,6 +107,9 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+    /**
+     * QueryDSL
+     */
     public List<Order> findAll(OrderSearch orderSearch) {
         QOrder order = QOrder.order;
         QMember member = QMember.member;
@@ -118,6 +120,9 @@ public class OrderRepository {
                 .join(order.member, member)
                 .where(statusEq(orderSearch.getOrderStatus()),
                         nameLike(orderSearch.getMemberName())
+                )
+                .orderBy(
+                        order.orderDate.asc().nullsLast()
                 )
                 .limit(1000)
                 .fetch();

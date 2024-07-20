@@ -1,4 +1,4 @@
-package jpabook.jpashop.api;
+package jpabook.jpashop.view;
 
 import java.util.List;
 import jpabook.jpashop.domain.item.Item;

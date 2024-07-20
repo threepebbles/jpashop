@@ -1,10 +1,10 @@
-package jpabook.jpashop.api;
+package jpabook.jpashop.view;
 
 import java.util.List;
-import jpabook.jpashop.api.dto.BookForm;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.domain.item.ItemService;
+import jpabook.jpashop.view.dto.BookForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

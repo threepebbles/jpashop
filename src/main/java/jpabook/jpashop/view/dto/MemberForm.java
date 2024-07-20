@@ -1,4 +1,4 @@
-package jpabook.jpashop.api.dto;
+package jpabook.jpashop.view.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

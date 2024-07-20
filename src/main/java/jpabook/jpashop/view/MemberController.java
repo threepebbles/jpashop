@@ -1,11 +1,11 @@
-package jpabook.jpashop.api;
+package jpabook.jpashop.view;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import jpabook.jpashop.api.dto.MemberForm;
 import jpabook.jpashop.domain.common.Address;
 import jpabook.jpashop.domain.member.Member;
 import jpabook.jpashop.domain.member.MemberService;
+import jpabook.jpashop.view.dto.MemberForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

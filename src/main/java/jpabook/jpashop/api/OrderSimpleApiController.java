@@ -7,6 +7,8 @@ import jpabook.jpashop.domain.order.Order;
 import jpabook.jpashop.domain.order.OrderRepository;
 import jpabook.jpashop.domain.order.OrderSearch;
 import jpabook.jpashop.domain.order.OrderStatus;
+import jpabook.jpashop.domain.order.simplequery.OrderSimpleQueryDto;
+import jpabook.jpashop.domain.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     // 이렇게만 하면 json 파싱 오류 발생. jackson-datatype-hibernate 모듈을 사용하면 임시 해결이 가능하긴 하지만 근본적인 해결책이 아니므로 사용X
     // 지연 로딩(LAZY)을 피하기 위해 즉시 로딩(EAGER)로 설정하면 안됨! 즉시 로딩으로 설정하면 성능 튜닝이 매우 어려워짐.
@@ -56,6 +59,30 @@ public class OrderSimpleApiController {
                 .toList();
         return result;
     }
+
+    // select 절에서 원하는 데이터만 조회. select 이후 쿼리문은 v3와 동일.
+    // 딱 이 API 스펙에 맞는 DTO를 만들어서 사용했기 때문에 리포지토리의 재사용성은 떨어지지만 성능면에서 v3보다 약간 나음(거의 성능 차이 안남. 대부분의 성능 차이는 select 필드 개수가 아닌 join에서 발생)
+    // 컨트롤러 API 스펙이 리포지토리에 반영되는 결과가 나왔으므로 별로 좋은 설계는 아님. 컨트롤러 API 스펙의 변화가 리포지토리 코드에 변화를 요구하게 됨. 되도록 리포지토리는 가급적이면 순수하게 엔티티를 조회하는 용도로만 사용되는게 좋음.
+    // 이런 특수한 사용 용도의 복잡한 쿼리를 실행하고 싶은 경우는 복잡한 쿼리용 레포지토리(OrderSimpeQueryRepository)를 따로 생성해서 사용하면 유지보수성이 높아짐.
+
+    // 실시간 응답이 중요하고, 집요하게 많이 호출되는 쿼리인 경우,
+    // 통계용으로 이런 특정 쿼리를 호출해야 할 때 사용하면 좋은 방법임
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4() {
+        return orderSimpleQueryRepository.findOrderDtos();
+    }
+
+    /**
+     * 정리
+     * <p>
+     * 1. 우선 엔티티를 DTO로 변환 (v2)
+     * <p>
+     * 2. 필요하면 페치 조인으로 성능 최적화 -> 대부분 이슈가 해결됨 (v3)
+     * <p>
+     * 3. 그래도 안되면 DTO로 직접 조회하는 방법 사용 (v4)
+     * <p>
+     * 4. 최후의 방법은 JPA가 제공하는 네이티브 SQL이나 Spring JDBC Template을 사용해서 SQL을 직접 작성
+     */
 
     //==DTO==//
     @Data

@@ -142,4 +142,14 @@ public class OrderRepository {
         }
         return member.name.like(nameCond);
     }
+
+    public List<Order> findAllWithMemberDelivery() {
+        // 페치 조인
+        // fetch는 JPA만 있는 문법
+        return em.createQuery(
+                "select o from Order o"
+                        + " join fetch o.member m"
+                        + " join fetch o.delivery d", Order.class
+        ).getResultList();
+    }
 }

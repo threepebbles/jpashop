@@ -36,6 +36,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
+    // LAZY로 해놓으면 ByteBuddyInterceptor(프록시 객체)가 들어가 있음
     @ManyToOne(fetch = LAZY)  // XXtoOne은 default가 FetchType.EAGER이므로 꼭 LAZY로 설정바꿔줘야 함
     @JoinColumn(name = "member_id") // 외래키 이름
     private Member member;

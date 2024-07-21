@@ -46,6 +46,9 @@ dependencies {
     // bean validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // jackson-datatype-hibernate
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate6'
+
     // h2
     runtimeOnly 'com.h2database:h2'
 

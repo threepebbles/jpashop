@@ -114,6 +114,16 @@ public class OrderApiController {
         return orderQueryRepository.findOrderQueryDtos();
     }
 
+    /**
+     * Query 수: 항상 2번
+     * <p>
+     * 필요한 OrderItem들의 PK를 메모리에서 계산해서 IN절 쿼리로 한번에 조회하는 방식.
+     */
+    @GetMapping("/api/v5/orders")
+    public List<OrderQueryDto> ordersV5() {
+        return orderQueryRepository.findAllByDto_optimization();
+    }
+
     //==DTO==//
     @Getter
     static class OrderDto {

@@ -15,7 +15,7 @@ spring:
         #        show_sql: true  # sout으로 로그 출력
         format_sql: true
         # 일대다 관계에서 컬렉션 페치 조인의 크기를 결정 (실무에서는 global 세팅을 주로 함)
-#        default_batch_fetch_size: 100
+        default_batch_fetch_size: 100
 
 
 logging:

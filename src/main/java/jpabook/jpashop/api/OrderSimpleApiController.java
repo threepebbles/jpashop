@@ -20,9 +20,18 @@ public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
-    // 이렇게만 하면 json 파싱 오류 발생. jackson-datatype-hibernate 모듈을 사용하면 임시 해결이 가능하긴 하지만 근본적인 해결책이 아니므로 사용X
-    // 지연 로딩(LAZY)을 피하기 위해 즉시 로딩(EAGER)로 설정하면 안됨! 즉시 로딩으로 설정하면 성능 튜닝이 매우 어려워짐.
-    // 항상 지연 로딩을 기본으로, 성능 최적화가 필요한 부분만 페치 조인으로 해결할 것
+    /**
+     * 1. 순환 참조 문제
+     * <p>
+     * 양방향 연관관계로 인해 순환 참조가 발생함. (Order 안에 member 안에 order 안에 ...). 순환 참조를 해결하기 위해서 한쪽에 @JsonIgnore 해주어야 함
+     * <p>
+     * 2. Json 파싱 오류
+     * <p>
+     * 이렇게만 하면 json 파싱 오류 발생. jackson-datatype-hibernate 모듈을 사용하면 임시 해결이 가능하긴 하지만 근본적인 해결책이 아니므로 다른 방법으로 해결하는 것이 좋음.
+     * <p>
+     * 3. 지연 로딩(LAZY)을 피하기 위해 즉시 로딩(EAGER)으로 설정 하면 안됨! 즉시 로딩으로 설정하면 성능 튜닝이 매우 어려워짐. 항상 지연 로딩을 기본으로, 성능 최적화가 필요한 부분만 페치
+     * 조인으로 해결할 것
+     */
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByString(new OrderSearch());
